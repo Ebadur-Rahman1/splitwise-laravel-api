@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Events\UserRegistered;
 
 class AuthController extends Controller
 {
@@ -17,15 +18,19 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
+        event(new UserRegistered($user));
+
         return response()->json([
             'message' => 'User registered successfully'
         ]);
+
+        
     }
 
     // Login

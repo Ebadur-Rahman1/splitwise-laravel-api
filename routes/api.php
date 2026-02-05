@@ -6,6 +6,22 @@ use App\Http\Controllers\Api\GroupController;
 use App\Http\Controllers\Api\ExpenseController;
 use App\Models\ExpenseSplit;
 use App\Http\Controllers\Api\SettlementController;
+use Illuminate\Support\Facades\Mail;
+
+// =======================
+// Mail test route
+// =======================
+
+Route::get('/test-ses', function () {
+
+    Mail::raw('Splitwise SES Test Mail', function ($message) {
+        $message->to('ebad2call@gmail.com')
+            ->subject('SES Working');
+    });
+
+    return response()->json(['message' => 'SES mail sent']);
+});
+
 
 Route::get('/status', function () {
     return response()->json([

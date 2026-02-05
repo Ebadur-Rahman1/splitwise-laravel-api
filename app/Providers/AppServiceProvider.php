@@ -2,10 +2,20 @@
 
 namespace App\Providers;
 
+use App\Events\UserRegistered;
+use App\Listeners\SendWelcomeEmail;
+
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+    protected $listen = [
+        UserRegistered::class => [
+            SendWelcomeEmail::class,
+        ],
+    ];
+
     /**
      * Register any application services.
      */
